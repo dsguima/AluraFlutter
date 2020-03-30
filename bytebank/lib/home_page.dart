@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,19 +20,19 @@ class HomePage extends StatelessWidget {
         Card(
           child: ListTile(
             leading: Icon(
-              Icons.monetization_on
+                Icons.monetization_on
             ),
             title: Text("100.0"),
-            subtitle: Text("1000"),
+            subtitle: Text("2000"),
           ),
         ),
         Card(
           child: ListTile(
             leading: Icon(
-              Icons.monetization_on
+                Icons.monetization_on
             ),
             title: Text("200.0"),
-            subtitle: Text("1000"),
+            subtitle: Text("2000"),
           ),
         ),
       ],
