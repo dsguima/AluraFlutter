@@ -1,3 +1,4 @@
+import 'package:bytebank/model/transferencia.dart';
 import 'package:flutter/material.dart';
 
 class ListaTransferencia extends StatelessWidget {
@@ -17,26 +18,29 @@ class ListaTransferencia extends StatelessWidget {
   _body() {
     return Column(
       children: <Widget>[
-        Card(
-          child: ListTile(
-            leading: Icon(
-                Icons.monetization_on
-            ),
-            title: Text("100.0"),
-            subtitle: Text("2000"),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: Icon(
-                Icons.monetization_on
-            ),
-            title: Text("200.0"),
-            subtitle: Text("2000"),
-          ),
-        ),
+        ItemTransferencia(Transferencia(200.0, 2334)),
+        ItemTransferencia(Transferencia(200.0, 2334)),
+        ItemTransferencia(Transferencia(200.0, 2334)),
+        ItemTransferencia(Transferencia(200.0, 2334)),
       ],
     );
   }
 }
 
+class ItemTransferencia extends StatelessWidget {
+
+  final Transferencia _transferencia;
+
+  ItemTransferencia(this._transferencia);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.monetization_on),
+        title: Text(_transferencia.valor.toString()),
+        subtitle: Text(_transferencia.numeroConta.toString()),
+      ),
+    );
+  }
+}
