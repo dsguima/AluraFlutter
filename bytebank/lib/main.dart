@@ -14,7 +14,7 @@ class ByteBankApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-      home: FormularioTransferencia(),
+      home: ListaTransferencia(),
     );
   }
 }

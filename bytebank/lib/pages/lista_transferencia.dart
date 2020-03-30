@@ -1,4 +1,5 @@
 import 'package:bytebank/model/transferencia.dart';
+import 'package:bytebank/pages/formulario_transferencia.dart';
 import 'package:flutter/material.dart';
 
 class ListaTransferencia extends StatelessWidget {
@@ -10,9 +11,16 @@ class ListaTransferencia extends StatelessWidget {
       ),
       body: _body(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      ),
+          child: Icon(Icons.add), onPressed: () => _novaTransferencia(context)),
     );
+  }
+
+  void _novaTransferencia(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return FormularioTransferencia();
+    })).then((transferenciaRecebida) {
+      debugPrint('Transferencia realizada: $transferenciaRecebida');
+    });
   }
 
   _body() {
@@ -28,7 +36,6 @@ class ListaTransferencia extends StatelessWidget {
 }
 
 class ItemTransferencia extends StatelessWidget {
-
   final Transferencia _transferencia;
 
   ItemTransferencia(this._transferencia);
