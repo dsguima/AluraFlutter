@@ -1,9 +1,12 @@
+import 'package:bytebank2/database/app_database.dart';
+import 'package:bytebank2/models/contato_bean.dart';
 import 'package:bytebank2/screens/contatos/lista.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //print(save(Contact('Maria', 1234)));
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
@@ -27,7 +30,7 @@ class Dashboard extends StatelessWidget {
           child: Material(
             color: Theme.of(context).primaryColor,
             child: InkWell(
-              onTap: () => _navigatorListContatos(context),
+              onTap: () => _navigatorListContacts(context),
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 width: 150,
@@ -37,7 +40,7 @@ class Dashboard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Icon(Icons.people, color: Colors.white, size: 32.0,),
-                    Text('Contatos', style: TextStyle(
+                    Text('Contacts', style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
                     ),),
@@ -51,7 +54,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  _navigatorListContatos(context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListaContatos()));
+  _navigatorListContacts(context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListaContacts()));
   }
 }

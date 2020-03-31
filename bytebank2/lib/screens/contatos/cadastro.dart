@@ -1,13 +1,13 @@
-import 'package:bytebank2/models/contato.dart';
+import 'package:bytebank2/models/contato_bean.dart';
 import 'package:flutter/material.dart';
 
-class CadastroContato extends StatefulWidget {
+class CadastroContact extends StatefulWidget {
 
   @override
-  _CadastroContatoState createState() => _CadastroContatoState();
+  _CadastroContactState createState() => _CadastroContactState();
 }
 
-class _CadastroContatoState extends State<CadastroContato> {
+class _CadastroContactState extends State<CadastroContact> {
 
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _numeroContaController = TextEditingController();
@@ -16,7 +16,7 @@ class _CadastroContatoState extends State<CadastroContato> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de contato'),
+        title: Text('Cadastro de Contact'),
       ),
       body: _formulario(),
     );
@@ -71,6 +71,6 @@ class _CadastroContatoState extends State<CadastroContato> {
     final String nome = _nomeController.text;
     final int numeroConta = int.tryParse(_numeroContaController.text);
 
-    Navigator.pop(context, Contato(nome, numeroConta));
+    Navigator.pop(context, Contact(nome, numeroConta));
   }
 }
