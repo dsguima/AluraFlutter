@@ -1,13 +1,22 @@
-import 'package:bytebank/model/transferencia.dart';
-import 'package:bytebank/pages/formulario_transferencia.dart';
+import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
+import 'package:bytebank/models/transferencia.dart';
 
-class ListaTransferencia extends StatelessWidget {
+const _titleAppBar = "Transferências";
+
+class ListaTransferencia extends StatefulWidget {
+  @override
+  _ListaTransferenciaState createState() => _ListaTransferenciaState();
+}
+
+class _ListaTransferenciaState extends State<ListaTransferencia> {
+  final List<Transferencia> _transferencias = List();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Transferências"),
+        title: Text(_titleAppBar),
       ),
       body: _body(),
       floatingActionButton: FloatingActionButton(
@@ -18,19 +27,26 @@ class ListaTransferencia extends StatelessWidget {
   void _novaTransferencia(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return FormularioTransferencia();
-    })).then((transferenciaRecebida) {
+    })).then((transferenciaRecebida) => _atualiza(transferenciaRecebida));
+  }
+
+  void _atualiza(transferenciaRecebida) {
+    //Future.delayed(Duration(seconds: 2), (){
+    if(transferenciaRecebida!=null){
       debugPrint('Transferencia realizada: $transferenciaRecebida');
-    });
+      setState(() {
+        _transferencias.add(transferenciaRecebida);
+      });
+    }
+    //});
   }
 
   _body() {
-    return Column(
-      children: <Widget>[
-        ItemTransferencia(Transferencia(200.0, 2334)),
-        ItemTransferencia(Transferencia(200.0, 2334)),
-        ItemTransferencia(Transferencia(200.0, 2334)),
-        ItemTransferencia(Transferencia(200.0, 2334)),
-      ],
+    return ListView.builder(
+      itemCount: _transferencias.length,
+      itemBuilder: (context, indice) {
+        return ItemTransferencia(_transferencias[indice]);
+      },
     );
   }
 }
