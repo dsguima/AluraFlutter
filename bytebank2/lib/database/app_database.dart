@@ -4,13 +4,14 @@ import 'package:sqflite/sqflite.dart';
 
 Future<Database> createDatabase() async {
   final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'bytebank.db'),
-      onCreate: (db, version) {
-  return db.execute(
-  "CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, account_number INTEGER)",
-  );
-  },
-  version: 1,
+    join(await getDatabasesPath(), 'bytebank.db'),
+    onCreate: (db, version) {
+      return db.execute(
+        "CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, account_number INTEGER)",
+      );
+    },
+    version: 1,
+    //onDowngrade: onDatabaseDowngradeDelete,
   );
   return database;
 }

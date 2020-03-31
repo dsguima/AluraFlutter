@@ -3,7 +3,12 @@ import 'package:bytebank2/models/contato_bean.dart';
 import 'package:bytebank2/screens/contatos/cadastro.dart';
 import 'package:flutter/material.dart';
 
-class ListaContacts extends StatelessWidget {
+class ListaContacts extends StatefulWidget {
+  @override
+  _ListaContactsState createState() => _ListaContactsState();
+}
+
+class _ListaContactsState extends State<ListaContacts> {
   @override
   Widget build(BuildContext context) {
     //Contacts.add(Contact('daniele', 12134, id:0));
@@ -23,7 +28,7 @@ class ListaContacts extends StatelessWidget {
   FutureBuilder<List<Contact>> _listaContatos() {
     return FutureBuilder(
       initialData: List(),
-      future: findAll(), //Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+      future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -66,8 +71,7 @@ class ListaContacts extends StatelessWidget {
 
   _cadastrarContact(context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => CadastroContact()))
-        .then((novoContact) => debugPrint(novoContact.toString()));
+        .push(MaterialPageRoute(builder: (context) => CadastroContact()));
   }
 }
 
@@ -80,9 +84,16 @@ class ItemContact extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(contact.name),
-        subtitle: Text(contact.accountNumber.toString()),
+        title: Text(contact.name,
+          style: TextStyle(
+            fontSize: 24.0,
+          ),),
+        subtitle: Text(contact.accountNumber.toString(),
+          style: TextStyle(
+            fontSize: 16.0,
+          ),),
       ),
     );
   }
 }
+

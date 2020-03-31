@@ -1,14 +1,13 @@
+import 'package:bytebank2/database/app_database.dart';
 import 'package:bytebank2/models/contato_bean.dart';
 import 'package:flutter/material.dart';
 
 class CadastroContact extends StatefulWidget {
-
   @override
   _CadastroContactState createState() => _CadastroContactState();
 }
 
 class _CadastroContactState extends State<CadastroContact> {
-
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _numeroContaController = TextEditingController();
 
@@ -70,7 +69,6 @@ class _CadastroContactState extends State<CadastroContact> {
   _salvar() {
     final String nome = _nomeController.text;
     final int numeroConta = int.tryParse(_numeroContaController.text);
-
-    Navigator.pop(context, Contact(nome, numeroConta));
+    save(Contact(nome, numeroConta)).then((id) => Navigator.pop(context));
   }
 }
