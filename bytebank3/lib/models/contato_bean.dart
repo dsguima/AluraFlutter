@@ -14,6 +14,11 @@ class Contact {
     };
   }
 
+  Contact.fromJon(Map<String, dynamic> map):
+        id = 0,
+        name = map["name"],
+        accountNumber = map["accountNumber"];
+
   @override
   String toString() {
     return 'Contact{name: $name, accountNumber: $accountNumber}';

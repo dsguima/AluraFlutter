@@ -1,3 +1,4 @@
+import 'package:bytebank3/components/prgress.dart';
 import 'package:bytebank3/database/dao/contato_dao.dart';
 import 'package:bytebank3/models/contato_bean.dart';
 import 'package:bytebank3/screens/contatos/cadastro.dart';
@@ -17,7 +18,7 @@ class _ListaContactsState extends State<ListaContacts> {
     //Contacts.add(Contact('daniele', 12134, id:0));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text('Transfer'),
       ),
       body: _listaContatos(),
       //_list(),
@@ -37,7 +38,7 @@ class _ListaContactsState extends State<ListaContacts> {
           case ConnectionState.none:
             break;
           case ConnectionState.waiting:
-            return _loading();
+            return Progress(texto: 'Carregando lista de contatos');
             break;
           case ConnectionState.active:
             // usar para stream
@@ -55,20 +56,6 @@ class _ListaContactsState extends State<ListaContacts> {
         }
         return Text('Erro desconhecido');
       },
-    );
-  }
-
-  Center _loading() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          CircularProgressIndicator(),
-          SizedBox(height: 20.0,),
-          Text('Loading...'),
-        ],
-      ),
     );
   }
 
