@@ -1,4 +1,5 @@
 import 'package:bytebank3/api/web_client.dart';
+import 'package:bytebank3/components/centered_message.dart';
 import 'package:bytebank3/components/prgress.dart';
 import 'package:bytebank3/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,12 @@ class ListaTransacionFeed extends StatelessWidget {
               case ConnectionState.active:
                 break;
               case ConnectionState.done:
-                final List<Transaction> transactions = snapshot.data;
-                return _listView(transactions);
+                if (snapshot.hasData) {
+                  final List<Transaction> transactions = snapshot.data;
+                  return _listView(transactions);
+                }
+                return CenteredMessage('Nenhuma transação encontrada!',
+                    icon: Icons.warning);
                 break;
             }
             return Text('Erro desconhecido');

@@ -1,3 +1,5 @@
+import 'package:bytebank3/models/contato_bean.dart';
+import 'package:bytebank3/models/transaction.dart';
 import 'package:bytebank3/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,8 @@ class ByteBankApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    findAll().then((onValue) => print(onValue));
+    //save(Transaction(1000, Contact('teste', 234)));
+    //findAll().then((onValue) => print(onValue));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

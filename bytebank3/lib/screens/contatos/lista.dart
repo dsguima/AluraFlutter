@@ -1,7 +1,9 @@
+import 'package:bytebank3/components/centered_message.dart';
 import 'package:bytebank3/components/prgress.dart';
 import 'package:bytebank3/database/dao/contato_dao.dart';
 import 'package:bytebank3/models/contato_bean.dart';
 import 'package:bytebank3/screens/contatos/cadastro.dart';
+import 'package:bytebank3/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 class ListaContacts extends StatefulWidget {
@@ -10,7 +12,6 @@ class ListaContacts extends StatefulWidget {
 }
 
 class _ListaContactsState extends State<ListaContacts> {
-
   final ContatoDao _dao = ContatoDao();
 
   @override
@@ -32,7 +33,8 @@ class _ListaContactsState extends State<ListaContacts> {
   FutureBuilder<List<Contact>> _listaContatos() {
     return FutureBuilder(
       initialData: List(),
-      future: Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
+      future:
+          Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -44,18 +46,29 @@ class _ListaContactsState extends State<ListaContacts> {
             // usar para stream
             break;
           case ConnectionState.done:
-            final List<Contact> contacts = snapshot.data;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                final Contact contact = contacts[index];
-                return ItemContact(contact);
-              },
-              itemCount: contacts.length,
-            );
+            if (snapshot.hasData) {
+              final List<Contact> contacts = snapshot.data;
+              return _listView(contacts);
+            }
+            return CenteredMessage('Você não tem contatos!',
+                icon: Icons.warning);
             break;
         }
         return Text('Erro desconhecido');
       },
+    );
+  }
+
+  ListView _listView(List<Contact> contacts) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final Contact contact = contacts[index];
+        return ItemContact(contact, onclick: (){
+          Navigator.of((context)).push(MaterialPageRoute(builder: (context)=>TransactionForm(contact)));
+        },);
+      },
+      itemCount: contacts.length,
+
     );
   }
 
@@ -67,23 +80,28 @@ class _ListaContactsState extends State<ListaContacts> {
 
 class ItemContact extends StatelessWidget {
   final Contact contact;
+final Function onclick;
 
-  ItemContact(this.contact);
+  ItemContact(this.contact, {@required this.onclick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(contact.name,
+        onTap: onclick,
+        title: Text(
+          contact.name,
           style: TextStyle(
             fontSize: 24.0,
-          ),),
-        subtitle: Text(contact.accountNumber.toString(),
+          ),
+        ),
+        subtitle: Text(
+          contact.accountNumber.toString(),
           style: TextStyle(
             fontSize: 16.0,
-          ),),
+          ),
+        ),
       ),
     );
   }
 }
-
