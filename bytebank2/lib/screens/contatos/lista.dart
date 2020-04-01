@@ -1,4 +1,4 @@
-import 'package:bytebank2/database/app_database.dart';
+import 'package:bytebank2/database/dao/contato_dao.dart';
 import 'package:bytebank2/models/contato_bean.dart';
 import 'package:bytebank2/screens/contatos/cadastro.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,9 @@ class ListaContacts extends StatefulWidget {
 }
 
 class _ListaContactsState extends State<ListaContacts> {
+
+  final ContatoDao _dao = ContatoDao();
+
   @override
   Widget build(BuildContext context) {
     //Contacts.add(Contact('daniele', 12134, id:0));
@@ -28,7 +31,7 @@ class _ListaContactsState extends State<ListaContacts> {
   FutureBuilder<List<Contact>> _listaContatos() {
     return FutureBuilder(
       initialData: List(),
-      future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+      future: Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
