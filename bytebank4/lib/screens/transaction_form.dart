@@ -1,4 +1,5 @@
 import 'package:bytebank4/api/webclients/transaction_webclient.dart';
+import 'package:bytebank4/components/auth_dialog.dart';
 import 'package:bytebank4/models/contato_bean.dart';
 import 'package:bytebank4/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,11 @@ class TransactionForm extends StatelessWidget {
                 height: 16.0,
               ),
               RaisedButton(
-                child: Text('Transfer'),
-                onPressed: () => _save(_valueControler, context),
+                  child: Text('Transfer'),
+                  onPressed: () {
+                    _auth(context);
+                  }
+                //_save(_valueControler, context),
               ),
             ],
           ),
@@ -72,12 +76,29 @@ class TransactionForm extends StatelessWidget {
     });
   }
 
-  _save(TextEditingController valueControler, context) async {
+  _auth(context) {
     if (_formkey.currentState.validate()) {
-      if (await _client.save(Transaction(double.tryParse(_valueControler.text), _contact)) != null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AuthDialog(
+              onConfirm: (password) {
+                _save(context, password);
+              },
+            );
+          });
+    } else
+      return;
+  }
+
+  _save(context, password) async {
+    if (_formkey.currentState.validate()) {
+      if (await _client.save(
+          Transaction(double.tryParse(_valueControler.text), _contact), password) != null) {
         Navigator.pop(context);
       } else {
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Ocorreu um erro!')));
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('Ocorreu um erro!')));
       }
     }
     return;

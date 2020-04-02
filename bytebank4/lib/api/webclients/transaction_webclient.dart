@@ -19,13 +19,13 @@ class TransactionWebClient {
     return listTransaction;
   }
 
-  Future<Transaction> save(Transaction obj) async {
+  Future<Transaction> save(Transaction obj, String password) async {
 
     final String transactionJson = jsonEncode(obj.toJson());
 
     var response = await client.post(
         baseUrl,
-        headers: {'Content-Type': 'application/json', 'password': '1000'},
+        headers: {'Content-Type': 'application/json', 'password': password},
         body: transactionJson
     ).timeout(Duration(seconds: 5));
 
