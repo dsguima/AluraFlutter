@@ -1,5 +1,4 @@
 class Contact {
-
   final int id;
   final String name;
   final int accountNumber;
@@ -14,14 +13,19 @@ class Contact {
     };
   }
 
-  Contact.fromJon(Map<String, dynamic> map):
-        id = 0,
+  Contact.fromJson(Map<String, dynamic> map)
+      : id = 0,
         name = map["name"],
         accountNumber = map["accountNumber"];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'accountNumber': accountNumber,
+      };
 
   @override
   String toString() {
     return 'Contact{name: $name, accountNumber: $accountNumber}';
   }
-
 }

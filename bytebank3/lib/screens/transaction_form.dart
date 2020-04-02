@@ -1,4 +1,3 @@
-import 'package:bytebank3/api/web_client.dart';
 import 'package:bytebank3/api/webclients/transaction_webclient.dart';
 import 'package:bytebank3/models/contato_bean.dart';
 import 'package:bytebank3/models/transaction.dart';
@@ -6,11 +5,10 @@ import 'package:flutter/material.dart';
 
 class TransactionForm extends StatelessWidget {
   final Contact _contact;
-  var _formkey = GlobalKey<FormState>();
-  FormFieldValidator<String> validator;
+  final _formkey = GlobalKey<FormState>();
 
   final _valueControler = TextEditingController();
-  final TransactionWebClient _client =  TransactionWebClient();
+  final TransactionWebClient _client = TransactionWebClient();
 
   TransactionForm(this._contact);
 
@@ -76,13 +74,10 @@ class TransactionForm extends StatelessWidget {
 
   _save(TextEditingController valueControler, context) async {
     if (_formkey.currentState.validate()) {
-      Transaction novo = Transaction(double.tryParse(_valueControler.text), _contact);
-      final saved = await _client.save(novo);
-
-      if(saved!=null){
+      if (await _client.save(Transaction(double.tryParse(_valueControler.text), _contact)) != null) {
         Navigator.pop(context);
-      } else{
-        Scaffold.of(context) .showSnackBar(SnackBar(content: Text('Ocorreu um erro!')));
+      } else {
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Ocorreu um erro!')));
       }
     }
     return;

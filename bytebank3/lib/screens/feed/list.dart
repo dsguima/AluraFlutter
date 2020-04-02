@@ -1,4 +1,3 @@
-import 'package:bytebank3/api/web_client.dart';
 import 'package:bytebank3/api/webclients/transaction_webclient.dart';
 import 'package:bytebank3/components/centered_message.dart';
 import 'package:bytebank3/components/prgress.dart';
@@ -6,8 +5,7 @@ import 'package:bytebank3/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 class ListaTransacionFeed extends StatelessWidget {
-
-  final TransactionWebClient _client =  TransactionWebClient();
+  final TransactionWebClient _client = TransactionWebClient();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +14,8 @@ class ListaTransacionFeed extends StatelessWidget {
           title: Text('Transactions'),
         ),
         body: FutureBuilder(
-          future: Future.delayed(Duration(seconds: 2)).then((onValue)=> _client.findAll()),
+          future: Future.delayed(Duration(seconds: 1))
+              .then((onValue) => _client.findAll()),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
