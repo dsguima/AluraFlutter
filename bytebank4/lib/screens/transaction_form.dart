@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bytebank4/api/webclients/transaction_webclient.dart';
 import 'package:bytebank4/components/auth_dialog.dart';
+import 'package:bytebank4/components/response_dialog.dart';
 import 'package:bytebank4/models/contato_bean.dart';
 import 'package:bytebank4/models/transaction.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +70,8 @@ class TransactionForm extends StatelessWidget {
                   onPressed: () {
                     _auth(context);
                   }
-                //_save(_valueControler, context),
-              ),
+                  //_save(_valueControler, context),
+                  ),
             ],
           ),
         ),
@@ -80,10 +83,10 @@ class TransactionForm extends StatelessWidget {
     if (_formkey.currentState.validate()) {
       showDialog(
           context: context,
-          builder: (context) {
+          builder: (contextDialog) {
             return AuthDialog(
               onConfirm: (password) {
-                _save(context, password);
+                _save(context, contextDialog, password);
               },
             );
           });
@@ -91,10 +94,32 @@ class TransactionForm extends StatelessWidget {
       return;
   }
 
-  _save(context, password) async {
+  _save(context, contextDialog, password) async {
     if (_formkey.currentState.validate()) {
-      if (await _client.save(
-          Transaction(double.tryParse(_valueControler.text), _contact), password) != null) {
+      Transaction transaction = await _client
+          .save(Transaction(double.tryParse(_valueControler.text), _contact),
+              password)
+          .catchError((e) {
+        showDialog(
+            context: context,
+            builder: (contextDialog) {
+              return FailureDialog(e.me);
+            });
+      }, test: (e) => e is TimeoutException)
+     .catchError((e){
+        showDialog(
+            context: context,
+            builder: (contextDialog) {
+              return FailureDialog('erro timeout');
+            });
+      }, test: (e) => e is Exception) ;
+      if (transaction != null) {
+        await showDialog(
+            context: context,
+            builder: (contextDialog) {
+              return SuccessDialog('Tudo certo!');
+            });
+
         Navigator.pop(context);
       } else {
         Scaffold.of(context)

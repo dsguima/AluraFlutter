@@ -5,4 +5,4 @@ import 'interceptors/logging_interceptor.dart';
 
 final Client client = HttpClientWithInterceptor.build(interceptors: [
   LogginInterceptor(),
-]);
+], requestTimeout: Duration(seconds: 5));
