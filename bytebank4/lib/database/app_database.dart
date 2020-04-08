@@ -8,7 +8,7 @@ Future<Database> getDatabase(String sql) async {
       return db.execute(sql,);
     },
     version: 2,
-    //onDowngrade: onDatabaseDowngradeDelete,
+    onDowngrade: onDatabaseDowngradeDelete,
   );
   return database;
 }
